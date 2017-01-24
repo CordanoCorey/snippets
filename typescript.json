@@ -130,7 +130,7 @@
 	"Selector": {
 		"prefix": "selector",
 		"body": [
-			"export function ${1:selector_type}Selector(s: ${2:selector_model}): ${3:selector_return_type} {",
+			"export function ${1:selector_type}Selector(s: Observable<${2:selector_model}>): Observable<${3:selector_return_type}> {",
 			"\t$0",
 			"}",
 			""
