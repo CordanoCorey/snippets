@@ -25,11 +25,11 @@
 			"@Injectable()",
 			"export class ${1:string}Guard implements CanActivate {",
 			"",
-			"constructor() { }",
+			"\tconstructor() { }",
 			"",
-			"canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {",
-			"\treturn Observable.of(true);$0",
-			"}",
+			"\tcanActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {",
+			"\t\treturn Observable.of(true);$0",
+			"\t}",
 			"}",
 			""
 		],
@@ -146,7 +146,7 @@
 	"Selector": {
 		"prefix": "selector",
 		"body": [
-			"export function ${1:selector_Type}Selector(s: ${2:selector_model): ${3:selector_return_type} {",
+			"export function ${1:selector_Type}Selector(s: ${2:selector_model}): ${3:selector_return_type} {",
 			"\t$0",
 			"}",
 			""
