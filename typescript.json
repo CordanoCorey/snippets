@@ -58,7 +58,7 @@
 	"Mapper": {
 		"prefix": "mapper",
 		"body": [
-			"export function ${1:mapper_type}Mapper(s: ${2:mapper_model}): ${3:mapper_return_type} {",
+			"export function map${1:mapper_type}(model: ${2:mapper_model}): ${3:mapper_return_type} {",
 			"\t$0",
 			"}",
 			""
@@ -90,6 +90,32 @@
 		],
 		"description": "Models file"
 	},
+	"Observable.combineLatest": {
+		"prefix": "combineLatest",
+		"body": [
+			"Observable.combineLatest(${1:obs1}$, ${2:obs2}$, (${1:obs1}, ${2:obs2}) => (",
+			"\tObject.assign(new ${3:return_type}(),",
+			"\t\t{",
+			"\t\t\t${1:obs1},",
+			"\t\t\t${2:obs2}",
+			"\t\t}",
+			"\t)",
+			"));$0"
+		],
+		"description": "Observable.combineLatest"
+	},
+	"Observable.merge": {
+		"prefix": "merge",
+		"body": [
+			"Observable.merge(${1:obs1}$, ${2:obs2}$, (${1:obs1}, ${2:obs2}) => (",
+			"\t{",
+			"\t\t${1:obs1},",
+			"\t\t${2:obs2}",
+			"\t}",
+			"));$0"
+		],
+		"description": "Observable.merge"
+	},
 	"Reducer": {
 		"prefix": "reducer",
 		"body": [
@@ -103,6 +129,63 @@
 			"\t}",
 			"}",
 			""
+		],
+		"description": "Redux-style reducer"
+	},
+	"Reducer Reduce": {
+		"prefix": "reduce",
+		"body": [
+			"export function reduce${1:reducer_name}(state: ${3:state_type}, payload: ${2:payload_type}): ${3:state_type} {",
+			"\treturn Object.assign(new ${3:state_type}(), state, {",
+			"\t\t$0",
+			"\t});",
+			"}",
+			""
+		],
+		"description": "Redux-style reducer"
+	},
+	"Reducer Reduce Activate": {
+		"prefix": "reduceActivate",
+		"body": [
+			"export function reduceActivate(state: ${1:state_type}, payload: number | string): ${1:state_type} {",
+			"\treturn Object.assign(new ${1:state_type}(), { activeId: payload });",
+			"}",
+			"$0"
+		],
+		"description": "Redux-style reducer"
+	},
+	"Reducer Reduce Collection": {
+		"prefix": "reduceCollection",
+		"body": [
+			"export function reduce${1:reducer_type}s(state: ${1:reducer_type}s, payload: ${1:reducer_type}[]): ${1:reducer_type}s {",
+			"\tlet items = payload.reduce((acc: Dictionary<${1:reducer_type}>, item: ${1:reducer_type}) => {",
+			"\t\treturn Object.assign({}, acc, { [item.id]: item });",
+			"\t}, Object.assign({}, state.items));",
+			"\treturn Object.assign(new ${1:reducer_type}s(), state, { items });",
+			"}",
+			"$0"
+		],
+		"description": "Redux-style reducer"
+	},
+	"Reducer Reduce Item": {
+		"prefix": "reduceItem",
+		"body": [
+			"export function reduce${1:reducer_type}(state: ${1:reducer_type}s, action: Action, id?: number): ${1:reducer_type}s {",
+			"\tlet item = ${2:reducer}(id ? state.items[id] : state.activeId, action);",
+			"\tlet items = Object.assign({}, state.items, { [item.id]: item });",
+			"\treturn Object.assign(new ${1:reducer_type}(), state, { items });",
+			"}",
+			"$0"
+		],
+		"description": "Redux-style reducer"
+	},
+	"Reducer Reduce Id": {
+		"prefix": "reduceId",
+		"body": [
+			"export function reduceId(state: ${1:reducer_type}, payload: ${1:reducer_type}): ${1:reducer_type} {",
+			"\treturn Object.assign(new ${1:reducer_type}(), state, payload);",
+			"}",
+			"$0"
 		],
 		"description": "Redux-style reducer"
 	},
@@ -130,7 +213,28 @@
 	"Selector": {
 		"prefix": "selector",
 		"body": [
+			"export function ${1:selector_type}Selector(s: Store<any>): Observable<${3:selector_return_type}> {",
+			"\t$0",
+			"}",
+			""
+		],
+		"description": "Asynchronous selector"
+	},
+	"Custom Selector": {
+		"prefix": "cselector",
+		"body": [
 			"export function ${1:selector_type}Selector(s: Observable<${2:selector_model}>): Observable<${3:selector_return_type}> {",
+			"\t$0",
+			"}",
+			""
+		],
+		"description": "Asynchronous selector"
+	},
+	"User Selector": {
+		"prefix": "uselector",
+		"body": [
+			"export function ${1:selector_type}Selector(s: Store<any>): Observable<${3:selector_return_type}> {",
+			"\tlet user$ = currentUserSelector(s);",
 			"\t$0",
 			"}",
 			""
@@ -142,15 +246,15 @@
 		"body": [
 			"import { Collection } from '@caiu/core';",
 			"",
-			"export class ${1:Type} {",
+			"export class ${1:type} {",
 			"}",
 			"",
-			"export class ${1:Type}s extends Collection<${1:Type}> {",
+			"export class ${1:type}s extends Collection<${1:type}> {",
 			"}",
 			"",
-			"export class ${1:Type}sModel {",
-			"\tuser: ${2:User_Class};",
-			"\t${3:key}: ${1:Type}s;",
+			"export class ${1:type}sModel {",
+			"\tuser: ${2:user_class} = new ${2:user_class}();",
+			"\t${3:key}: ${1:type}s;",
 			"}",
 			"$0"
 		],
@@ -164,7 +268,7 @@
 			"}",
 			"",
 			"export class ${1:type}Model {",
-			"\tuser: ${2:user_class};",
+			"\tuser: ${2:user_class} = new ${2:user_class}();",
 			"\t${3:key}: ${1:type} = new ${1:type}();",
 			"}",
 			"$0"
