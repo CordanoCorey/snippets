@@ -44,6 +44,40 @@
 		],
 		"description": "Redux-style reducer"
 	},
+	"Guard": {
+		"prefix": "guard",
+		"body": [
+			"@Injectable()",
+			"export class ${1:guard_name}Guard implements CanActivate {",
+			"",
+			"\tconstructor() { }",
+			"",
+			"\tcanActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {",
+			"\t\treturn Observable.of(true);$0",
+			"\t}",
+			"}",
+			""
+		],
+		"description": "Router Guard for route definitions"
+	},
+	"Guard - ID": {
+		"prefix": "guard-id",
+		"body": [
+			"@Injectable()",
+			"export class ${1:guard_name}Guard implements CanActivate {",
+			"",
+			"\tconstructor(private store: Store<any>) { }",
+			"",
+			"\tcanActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {",
+			"\t\tconst id = parseInt(route.params['${2:key}'], 10);",
+			"\t\tthis.store.dispatch(${2:collection}Actions.activate(id));",
+			"\t\treturn Observable.of(true);$0",
+			"\t}",
+			"}",
+			""
+		],
+		"description": "Router Guard for adding route params to the store"
+	},
 	"Http Get": {
 		"prefix": "httpget",
 		"body": [
@@ -188,27 +222,6 @@
 			"$0"
 		],
 		"description": "Redux-style reducer"
-	},
-	"Route Guard": {
-		"prefix": "guard",
-		"body": [
-			"import { Injectable } from '@angular/core';",
-			"import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';",
-			"import { Observable } from 'rxjs/Observable';",
-			"import 'rxjs/add/observable/of';",
-			"",
-			"@Injectable()",
-			"export class ${1:string}Guard implements CanActivate {",
-			"",
-			"\tconstructor() { }",
-			"",
-			"\tcanActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {",
-			"\t\treturn Observable.of(true);$0",
-			"\t}",
-			"}",
-			""
-		],
-		"description": "Router Guard for route definitions"
 	},
 	"Selector": {
 		"prefix": "selector",
