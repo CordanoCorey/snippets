@@ -127,14 +127,8 @@
 	"Observable.combineLatest": {
 		"prefix": "combineLatest",
 		"body": [
-			"Observable.combineLatest(${1:obs1}$, ${2:obs2}$, (${1:obs1}, ${2:obs2}) => (",
-			"\tObject.assign(new ${3:return_type}(),",
-			"\t\t{",
-			"\t\t\t${1:obs1},",
-			"\t\t\t${2:obs2}",
-			"\t\t}",
-			"\t)",
-			"));$0"
+			"Observable.combineLatest(${1:obs1}$, ${2:obs2}$,",
+			"\t(${1:obs1}, ${2:obs2}) => build(${3:return_type}, { ${1:obs1}, ${2:obs2} }));$0"
 		],
 		"description": "Observable.combineLatest"
 	},
@@ -223,10 +217,42 @@
 		],
 		"description": "Redux-style reducer"
 	},
+	"Resolver": {
+		"prefix": "resolver",
+		"body": [
+			"@Injectable()",
+			"export class ${1:resolver_type}Resolver implements Resolve<${2:return_type}> {",
+			"",
+			"\tconstructor() { }",
+			"",
+			"\tresolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<${2:return_type}> {",
+			"\t\t$0",
+			"\t}",
+			"}",
+			""
+		],
+		"description": "Asynchronous selector"
+	},
+	"Resolver Dialog": {
+		"prefix": "resolver-dialog",
+		"body": [
+			"@Injectable()",
+			"export class ${1:resolver_type}Resolver implements Resolve<DialogModel> {",
+			"",
+			"\tconstructor() { }",
+			"",
+			"\tresolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DialogModel> {",
+			"\t\treturn Observable.of(build(DialogModel, { $0 }));",
+			"\t}",
+			"}",
+			""
+		],
+		"description": "Asynchronous selector"
+	},
 	"Selector": {
 		"prefix": "selector",
 		"body": [
-			"export function ${1:selector_type}Selector(s: Store<any>): Observable<${3:selector_return_type}> {",
+			"export function ${1:selector_type}Selector(store: Store<any>): Observable<${3:selector_return_type}> {",
 			"\t$0",
 			"}",
 			""
@@ -236,7 +262,7 @@
 	"Custom Selector": {
 		"prefix": "cselector",
 		"body": [
-			"export function ${1:selector_type}Selector(s: Observable<${2:selector_model}>): Observable<${3:selector_return_type}> {",
+			"export function ${1:selector_type}Selector(store: Observable<${2:selector_model}>): Observable<${3:selector_return_type}> {",
 			"\t$0",
 			"}",
 			""
@@ -246,7 +272,7 @@
 	"User Selector": {
 		"prefix": "uselector",
 		"body": [
-			"export function ${1:selector_type}Selector(s: Store<any>): Observable<${3:selector_return_type}> {",
+			"export function ${1:selector_type}Selector(store: Store<any>): Observable<${3:selector_return_type}> {",
 			"\tlet user$ = currentUserSelector(s);",
 			"\t$0",
 			"}",
